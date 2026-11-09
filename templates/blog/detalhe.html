@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.titulo }}{% endblock %}
+
+{% block body_class %}has-overlay{% endblock %}
+
+{% block content %}
+<article>
+  <h2>{{ post.titulo }}</h2>
+  <p><small>{{ post.data_postagem|date:"d/m/Y H:i" }}</small></p>
+  {{ post.conteudo|safe }}
+  <p>
+    <a href="{% url 'lista' %}">Voltar</a> |
+    <a href="{% url 'editar' post.pk %}">Editar</a> |
+    <a href="{% url 'remover' post.pk %}">Remover</a>
+  </p>
+</article>
+{% endblock %}

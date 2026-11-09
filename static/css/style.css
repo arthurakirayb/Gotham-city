@@ -1,0 +1,120 @@
+header {
+  color: rgb(255, 255, 255);
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  margin: 0 auto;
+}
+header .titulo-central {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+header .titulo-central h2 {
+  font-size: 1.45rem;
+  font-weight: normal;
+  margin-top: 0.3rem;
+}
+header nav ul {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  font-size: 1.15rem;
+}
+header nav ul a {
+  text-decoration: none;
+  color: #ffffff;
+}
+header nav ul a:hover {
+  color: #e2d40d;
+}
+
+main {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  width: 80%;
+  margin: 0 auto;
+  flex: 1;
+}
+main img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: 8px;
+}
+main article {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+main article p {
+  color: rgba(255, 255, 255, 0.85);
+}
+main a { color: #b8b2ff; }
+main a:hover { color: #e2d40d; }
+main form label { display: block; margin-top: 1rem; }
+main textarea, main input[type="text"] { width: 100%; }
+
+main article h3 a {
+  text-decoration: none;
+  color: #f5e50a;
+  font-size: 1.35rem;
+}
+main article h3 a:hover {
+  color: #e2d40d;
+}
+
+footer {
+  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("../images/fundo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+body.has-overlay {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("../images/fundo.jpg");
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+  }
+  header .titulo-central {
+    position: static;
+    transform: none;
+    margin-bottom: 1rem;
+  }
+  header nav ul {
+    gap: 0.5rem;
+    justify-items: center;
+  }
+  body {
+    font-size: 0.95rem;
+  }
+}
+.gif-destaque {
+  display: block;
+  margin: 1.5rem auto;
+  max-width: 700px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

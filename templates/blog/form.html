@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ acao }}{% endblock %}
+{% block content %}
+{% block body_class %}has-overlay{% endblock %}
+<h2>{{ acao }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Salvar</button>
+  <a href="{% url 'lista' %}">Cancelar</a>
+</form>
+{% endblock %}

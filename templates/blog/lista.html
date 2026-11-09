@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+<section>
+  <h2>Posts</h2>
+  {% for post in posts %}
+  <article>
+    <h3><a href="{% url 'detalhe' post.pk %}">{{ post.titulo }}</a></h3>
+    <p>{{ post.conteudo|striptags|truncatechars:150 }}</p>
+  </article>
+  {% empty %}
+  <p>Nenhum post ainda.</p>
+  {% endfor %}
+</section>
+{% endblock %}

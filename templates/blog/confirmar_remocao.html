@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Remover{% endblock %}
+{% block content %}
+{% block body_class %}has-overlay{% endblock %}
+<h2>Remover "{{ post.titulo }}"?</h2>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirmar</button>
+  <a href="{% url 'detalhe' post.pk %}">Cancelar</a>
+</form>
+{% endblock %}
