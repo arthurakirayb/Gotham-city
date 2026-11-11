@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
+
 {% block title %}{{ acao }}{% endblock %}
-{% block content %}
+
 {% block body_class %}has-overlay{% endblock %}
+
+{% block content %}
 <h2>{{ acao }}</h2>
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  <p>
+    <label for="id_titulo">Título:</label>
+    <input type="text" name="titulo" id="id_titulo" value="{{ post.titulo }}">
+  </p>
+  <p>
+    <label for="id_conteudo">Conteúdo (HTML):</label>
+    <textarea name="conteudo" id="id_conteudo" rows="10">{{ post.conteudo }}</textarea>
+  </p>
   <button type="submit">Salvar</button>
   <a href="{% url 'lista' %}">Cancelar</a>
 </form>

@@ -1,13 +1,6 @@
-from django.forms import ModelForm
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Post
-
-
-class PostForm(ModelForm):
-    class Meta:
-        model = Post
-        fields = ['titulo', 'conteudo']
 
 
 def lista(request):
@@ -21,20 +14,24 @@ def detalhe(request, pk):
 
 
 def criar(request):
-    form = PostForm(request.POST or None)
-    if form.is_valid():
-        post = form.save()
+    if request.method == 'POST':
+        post = Post(
+            titulo=request.POST['titulo'],
+            conteudo=request.POST['conteudo'],
+        )
+        post.save()
         return redirect('detalhe', pk=post.pk)
-    return render(request, 'blog/form.html', {'form': form, 'acao': 'Novo post'})
+    return render(request, 'blog/form.html', {'acao': 'Novo post'})
 
 
 def editar(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    form = PostForm(request.POST or None, instance=post)
-    if form.is_valid():
-        form.save()
-        return redirect('detalhe', pk=pk)
-    return render(request, 'blog/form.html', {'form': form, 'acao': 'Editar post'})
+    if request.method == 'POST':
+        post.titulo = request.POST['titulo']
+        post.conteudo = request.POST['conteudo']
+        post.save()
+        return redirect('detalhe', pk=post.pk)
+    return render(request, 'blog/form.html', {'acao': 'Editar post', 'post': post})
 
 
 def remover(request, pk):
