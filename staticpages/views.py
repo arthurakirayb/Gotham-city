@@ -1,5 +1,8 @@
 from django.forms import ModelForm
-from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import (
+    CreateView, DeleteView, DetailView, ListView, UpdateView,
+)
 
 from .models import Post
 
@@ -11,42 +14,41 @@ class PostForm(ModelForm):
         labels = {'titulo': 'Título', 'conteudo': 'Conteúdo (HTML)'}
 
 
-def lista(request):
-    posts = Post.objects.order_by('-data_postagem')
-    return render(request, 'blog/lista.html', {'posts': posts})
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/lista.html'
+    context_object_name = 'posts'
+    ordering = ['-data_postagem']
 
 
-def detalhe(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/detalhe.html', {'post': post})
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/detalhe.html'
+    context_object_name = 'post'
 
 
-def criar(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save()
-            return redirect('detalhe', pk=post.pk)
-    else:
-        form = PostForm()
-    return render(request, 'blog/form.html', {'form': form, 'acao': 'Novo post'})
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/form.html'
+    extra_context = {'acao': 'Novo post'}
+
+    def get_success_url(self):
+        return reverse('detalhe', kwargs={'pk': self.object.pk})
 
 
-def editar(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            form.save()
-            return redirect('detalhe', pk=post.pk)
-    else:
-        form = PostForm(instance=post)
-    return render(request, 'blog/form.html', {'form': form, 'acao': 'Editar post'})
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/form.html'
+    extra_context = {'acao': 'Editar post'}
+
+    def get_success_url(self):
+        return reverse('detalhe', kwargs={'pk': self.object.pk})
 
 
-def remover(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == 'POST':
-        post.delete()
-        return redirect('lista')
-    return render(request, 'blog/confirmar_remocao.html', {'post': post})
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog/confirmar_remocao.html'
+    context_object_name = 'post'
+    success_url = reverse_lazy('lista')
