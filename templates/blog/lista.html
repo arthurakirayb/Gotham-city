@@ -8,6 +8,7 @@
   {% for post in posts %}
   <article>
     <h3><a href="{% url 'detalhe' post.pk %}">{{ post.titulo }}</a></h3>
+    <p><small>{{ post.data_postagem|date:"d/m/Y H:i" }}</small></p>
     <p>{{ post.conteudo|striptags|truncatechars:150 }}</p>
   </article>
   {% empty %}
