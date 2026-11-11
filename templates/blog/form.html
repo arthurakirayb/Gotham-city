@@ -8,14 +8,7 @@
 <h2>{{ acao }}</h2>
 <form method="post">
   {% csrf_token %}
-  <p>
-    <label for="id_titulo">Título:</label>
-    <input type="text" name="titulo" id="id_titulo" value="{{ post.titulo }}">
-  </p>
-  <p>
-    <label for="id_conteudo">Conteúdo (HTML):</label>
-    <textarea name="conteudo" id="id_conteudo" rows="10">{{ post.conteudo }}</textarea>
-  </p>
+  {{ form.as_p }}
   <button type="submit">Salvar</button>
   <a href="{% url 'lista' %}">Cancelar</a>
 </form>
