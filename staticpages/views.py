@@ -4,8 +4,7 @@ from django.views.generic import (
     CreateView, DeleteView, DetailView, ListView, UpdateView,
 )
 from django.shortcuts import get_object_or_404
-from .models import Comment, Post
-
+from .models import Category, Comment, Post
 
 class PostForm(ModelForm):
     class Meta:
@@ -85,3 +84,20 @@ class CommentCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('detalhe', kwargs={'pk': self.post_obj.pk})
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'blog/categorias.html'
+    context_object_name = 'categorias'
+    ordering = ['nome']
+
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'blog/lista.html'
+    context_object_name = 'categoria'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = self.object.posts.order_by('-data_postagem')
+        return context

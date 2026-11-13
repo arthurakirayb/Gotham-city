@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Categorias{% endblock %}
+
+{% block body_class %}has-overlay{% endblock %}
+
+{% block content %}
+<section>
+  <h2>Categorias</h2>
+  {% for categoria in categorias %}
+  <article>
+    <h3><a href="{% url 'categoria' categoria.pk %}">{{ categoria.nome }}</a></h3>
+    <p>{{ categoria.descricao }}</p>
+  </article>
+  {% empty %}
+  <p>Nenhuma categoria ainda.</p>
+  {% endfor %}
+</section>
+{% endblock %}
