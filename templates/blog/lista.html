@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}{% if categoria %}{{ categoria.nome }}{% else %}Posts{% endif %}{% endblock %}
+
+{% block body_class %}{% if categoria %}has-overlay{% endif %}{% endblock %}
 
 {% block content %}
 <section>
+  {% if categoria %}
+  <h2>Categoria: {{ categoria.nome }}</h2>
+  <p>{{ categoria.descricao }}</p>
+  {% else %}
   <h2>Posts</h2>
+  {% endif %}
   {% for post in posts %}
   <article>
     <h3><a href="{% url 'detalhe' post.pk %}">{{ post.titulo }}</a></h3>
@@ -12,7 +19,7 @@
     <p>{{ post.conteudo|striptags|truncatechars:150 }}</p>
   </article>
   {% empty %}
-  <p>Nenhum post ainda.</p>
+  <p>Nenhum post{% if categoria %} nesta categoria{% endif %} ainda.</p>
   {% endfor %}
 </section>
 {% endblock %}

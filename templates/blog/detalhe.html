@@ -8,6 +8,14 @@
 <article>
   <h2>{{ post.titulo }}</h2>
   <p><small>{{ post.data_postagem|date:"d/m/Y H:i" }}</small></p>
+  <p>
+    Categorias:
+    {% for categoria in post.categorias.all %}
+    <a href="{% url 'categoria' categoria.pk %}">{{ categoria.nome }}</a>{% if not forloop.last %}, {% endif %}
+    {% empty %}
+    nenhuma
+    {% endfor %}
+  </p>
   {{ post.conteudo|safe }}
   <p>
     <a href="{% url 'lista' %}">Voltar</a> |
