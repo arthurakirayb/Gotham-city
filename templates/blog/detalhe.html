@@ -15,4 +15,20 @@
     <a href="{% url 'remover' post.pk %}">Remover</a>
   </p>
 </article>
+
+<section>
+  <h3>Comentários</h3>
+  <p><a href="{% url 'comentar' post.pk %}">Comentar</a></p>
+  {% for comentario in comentarios %}
+  <article>
+    <p>
+      <strong>{{ comentario.autor.username }}</strong>
+      <small>{{ comentario.data_postagem|date:"d/m/Y H:i" }}</small>
+    </p>
+    <p>{{ comentario.texto }}</p>
+  </article>
+  {% empty %}
+  <p>Nenhum comentário ainda.</p>
+  {% endfor %}
+</section>
 {% endblock %}
